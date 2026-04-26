@@ -13,58 +13,49 @@ interface Product {
 
 const products: Product[] = [
   {
-    name: "Shirts",
-    subtitle: "Men's Shirts",
+    name: "Shirt",
+    subtitle: "Premium Shirts",
     tags: "Formal · Casual",
     moq: "MOQ 50+",
-    image: "/shirts.png",
+    image: "/cat-shirt.png",
     alt: false,
-    slug: "shirts",
+    slug: "shirt",
   },
   {
-    name: "T-Shirts",
-    subtitle: "T-Shirts",
+    name: "T shirt",
+    subtitle: "Designer T-Shirts",
     tags: "Round Neck · Polo",
     moq: "MOQ 100+",
-    image: "/tshirts.png",
+    image: "/cat-tshirt.png",
     alt: true,
-    slug: "tshirts",
+    slug: "t-shirt",
   },
   {
-    name: "Lowers",
-    subtitle: "Lowers & Track Pants",
-    tags: "Track · Jogger · Pajama",
+    name: "Lower",
+    subtitle: "Active Lowers",
+    tags: "Track · Jogger",
     moq: "MOQ 50+",
-    image: "/lowers.png",
+    image: "/cat-lower.png",
     alt: false,
-    slug: "lowers",
+    slug: "lower",
   },
   {
     name: "Jeans",
     subtitle: "Denim Jeans",
-    tags: "Slim · Regular · Stretch",
+    tags: "Slim · Regular",
     moq: "MOQ 30+",
-    image: "/jeans.png",
+    image: "/cat-jeans.png",
     alt: true,
     slug: "jeans",
   },
   {
-    name: "Kurta",
-    subtitle: "Men's Kurta",
-    tags: "Ethnic · Festive",
+    name: "Kurta pajama",
+    subtitle: "Ethnic Wear",
+    tags: "Festive · Cotton",
     moq: "MOQ 30+",
-    image: "/kurta.png",
+    image: "/cat-kurta.png",
     alt: false,
-    slug: "kurta",
-  },
-  {
-    name: "Combos",
-    subtitle: "Mixed Bulk Combos",
-    tags: "Mix · Match · Bulk",
-    moq: "MOQ varies",
-    image: "/combo.png",
-    alt: true,
-    slug: "combos",
+    slug: "kurta-pajama",
   },
 ];
 
@@ -76,29 +67,24 @@ function ProductCard({ product }: { product: Product }) {
           src={product.image}
           alt={product.subtitle}
           fill
-          className={`object-cover transition-transform duration-500 group-hover:scale-110 ${
-            product.alt ? "opacity-75" : "opacity-70"
-          }`}
+          className={`object-cover transition-transform duration-700 group-hover:scale-110`}
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
         />
-        <div
-          className={`absolute inset-0 z-0 ${
-            product.alt
-              ? "bg-gradient-to-t from-ink/90 via-ink/30 to-transparent mix-blend-multiply"
-              : "bg-gradient-to-t from-ink/80 via-ink/20 to-transparent"
-          }`}
-        />
+        
+        {/* Removed internal shadows as requested */}
+        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
         <div className="text-center px-4 relative z-10 mt-auto pb-8">
           <div
-            className={`font-display text-3xl mb-2 drop-shadow-lg ${
-              product.alt ? "text-gold-light" : "text-cream"
+            className={`font-display text-2xl mb-1 drop-shadow-md ${
+              product.alt ? "text-gold-light" : "text-ink"
             }`}
           >
             {product.name}
           </div>
           <div
-            className={`text-xs tracking-widest uppercase drop-shadow-md ${
-              product.alt ? "text-cream" : "text-gold-light"
+            className={`text-[10px] tracking-[0.3em] uppercase ${
+              product.alt ? "text-cream/80" : "text-muted"
             }`}
           >
             {product.tags}
@@ -106,26 +92,21 @@ function ProductCard({ product }: { product: Product }) {
         </div>
 
         {/* View Products overlay on hover */}
-        <div className="absolute inset-0 bg-ink/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-20">
-          <span className="bg-gold text-ink px-6 py-3 text-xs tracking-widest uppercase font-bold transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-            View Products →
+        <div className="absolute inset-0 bg-ink/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-20">
+          <span className="bg-gold text-ink px-6 py-3 text-[10px] tracking-widest uppercase font-bold transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl">
+            View Collection →
           </span>
         </div>
       </div>
 
-      <div className="mt-4 flex justify-between items-start">
+      <div className="mt-4 flex justify-between items-start px-1">
         <div>
-          <div className="font-medium text-ink">{product.subtitle}</div>
-          <div className="text-sm text-muted">
-            {product.name === "Shirts" && "Formal, casual, party wear"}
-            {product.name === "T-Shirts" && "Round neck, polo, printed"}
-            {product.name === "Lowers" && "Daily wear, sports, lounge"}
-            {product.name === "Jeans" && "Multiple washes, fits, sizes"}
-            {product.name === "Kurta" && "Cotton, silk, party & festive"}
-            {product.name === "Combos" && "Curated sets for retailers"}
+          <div className="font-medium text-ink text-sm">{product.subtitle}</div>
+          <div className="text-[11px] text-muted tracking-wide mt-0.5">
+            Manufacturer Direct Pricing
           </div>
         </div>
-        <div className="text-gold-dark text-sm font-medium">{product.moq}</div>
+        <div className="text-gold-dark text-[11px] font-bold tracking-tighter">{product.moq}</div>
       </div>
     </Link>
   );
@@ -133,32 +114,35 @@ function ProductCard({ product }: { product: Product }) {
 
 export default function ProductsSection() {
   return (
-    <section id="products" className="py-20 md:py-28 bg-white">
+    <section id="products" className="py-24 md:py-32 bg-white">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-14">
-          <div className="section-label mb-4">Our Collection</div>
-          <h2 className="font-display text-3xl md:text-5xl text-ink">
-            Premium Range,{" "}
-            <span className="italic text-gold-dark">Wholesale Pricing</span>
+        <div className="text-center mb-16">
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <span className="w-8 h-[1px] bg-gold" />
+            <span className="section-label !mb-0">Main Categories</span>
+            <span className="w-8 h-[1px] bg-gold" />
+          </div>
+          <h2 className="font-display text-4xl md:text-5xl text-ink">
+            Our <span className="italic text-gold-dark">Collections</span>
           </h2>
-          <p className="text-muted mt-4 max-w-2xl mx-auto">
-            A wide variety in every product category — sizes, colors, and fabric
-            options. Special pricing for bulk orders.
+          <p className="text-muted mt-4 max-w-xl mx-auto text-sm">
+            Discover a wide variety of premium men&apos;s wear at competitive 
+            wholesale prices, designed for modern retailers.
           </p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6">
           {products.map((product) => (
             <ProductCard key={product.name} product={product} />
           ))}
         </div>
 
-        <div className="text-center mt-14">
+        <div className="text-center mt-16">
           <a
-            href="https://wa.me/919672299156?text=I%20need%20the%20catalog%20with%20prices"
+            href="https://wa.me/919672299156?text=Hello%20Porwal%20Clothes%20-%20Send%20full%20catalog"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-gold inline-block px-10 py-4 font-medium tracking-wider text-sm uppercase"
+            className="btn-gold inline-block px-12 py-4 font-medium tracking-widest text-xs uppercase shadow-gold"
           >
             Request Full Catalog
           </a>

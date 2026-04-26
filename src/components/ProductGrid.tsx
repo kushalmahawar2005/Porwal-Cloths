@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { Product } from "@/data/products";
 import ImageLightbox from "@/components/ImageLightbox";
+import QuickViewModal from "@/components/QuickViewModal";
 
 interface ProductGridProps {
   products: Product[];
@@ -13,11 +14,14 @@ interface ProductGridProps {
 function ProductCard({
   product,
   onImageClick,
+  onQuickView,
 }: {
   product: Product;
   onImageClick: () => void;
+  onQuickView: () => void;
 }) {
   const [isHovered, setIsHovered] = useState(false);
+  const hasHover = Boolean(product.imageHover);
 
   return (
     <div
@@ -34,12 +38,22 @@ function ProductCard({
           src={product.image}
           alt={product.name}
           fill
-          className={`object-cover transition-transform duration-700 ${
-            isHovered ? "scale-110" : "scale-100"
-          }`}
+          className={`object-cover transition-all duration-700 ease-luxe ${
+            isHovered && hasHover ? "opacity-0 scale-105" : "opacity-100 scale-100"
+          } ${isHovered && !hasHover ? "scale-[1.08]" : ""}`}
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent" />
+        {hasHover && (
+          <Image
+            src={product.imageHover!}
+            alt=""
+            fill
+            className={`object-cover absolute inset-0 transition-all duration-700 ease-luxe ${
+              isHovered ? "opacity-100 scale-105" : "opacity-0 scale-100"
+            }`}
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+          />
+        )}
 
         {/* Badge */}
         {product.badge && (
@@ -50,15 +64,39 @@ function ProductCard({
           </div>
         )}
 
-        {/* Zoom icon overlay */}
+        {/* Floating action stack */}
         <div
-          className={`absolute top-3 right-3 z-10 w-8 h-8 flex items-center justify-center bg-ink/60 text-cream/80 transition-all duration-300 ${
-            isHovered ? "opacity-100 scale-100" : "opacity-0 scale-75"
+          className={`absolute top-3 right-3 z-10 flex flex-col gap-2 transition-all duration-500 ${
+            isHovered ? "opacity-100 translate-x-0" : "opacity-0 translate-x-3"
           }`}
         >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-          </svg>
+          <button
+            type="button"
+            aria-label="Quick view"
+            onClick={(e) => {
+              e.stopPropagation();
+              onQuickView();
+            }}
+            className="w-9 h-9 flex items-center justify-center bg-paper/95 border border-gold/30 text-ink hover:bg-ink hover:text-gold-light transition-colors cursor-pointer"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} className="w-4 h-4">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M2.5 12s3.5-7 9.5-7 9.5 7 9.5 7-3.5 7-9.5 7S2.5 12 2.5 12z" />
+              <circle cx="12" cy="12" r="2.5" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            aria-label="Zoom image"
+            onClick={(e) => {
+              e.stopPropagation();
+              onImageClick();
+            }}
+            className="w-9 h-9 flex items-center justify-center bg-paper/95 border border-gold/30 text-ink hover:bg-ink hover:text-gold-light transition-colors cursor-pointer"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.6}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+            </svg>
+          </button>
         </div>
 
         {/* Quick Action */}
@@ -129,6 +167,8 @@ function ProductCard({
 export default function ProductGrid({ products, categoryName }: ProductGridProps) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
+  const [quickViewOpen, setQuickViewOpen] = useState(false);
 
   const lightboxImages = products.map((p) => ({
     src: p.image,
@@ -138,6 +178,11 @@ export default function ProductGrid({ products, categoryName }: ProductGridProps
   const openLightbox = (index: number) => {
     setLightboxIndex(index);
     setLightboxOpen(true);
+  };
+
+  const openQuickView = (p: Product) => {
+    setQuickViewProduct(p);
+    setQuickViewOpen(true);
   };
 
   return (
@@ -158,6 +203,7 @@ export default function ProductGrid({ products, categoryName }: ProductGridProps
             key={product.id}
             product={product}
             onImageClick={() => openLightbox(i)}
+            onQuickView={() => openQuickView(product)}
           />
         ))}
       </div>
@@ -187,6 +233,13 @@ export default function ProductGrid({ products, categoryName }: ProductGridProps
         initialIndex={lightboxIndex}
         isOpen={lightboxOpen}
         onClose={() => setLightboxOpen(false)}
+      />
+
+      {/* Quick View */}
+      <QuickViewModal
+        product={quickViewProduct}
+        open={quickViewOpen}
+        onClose={() => setQuickViewOpen(false)}
       />
     </div>
   );

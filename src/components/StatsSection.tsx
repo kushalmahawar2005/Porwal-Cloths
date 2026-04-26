@@ -83,8 +83,15 @@ function StatCard({ stat, index }: { stat: StatItem; index: number }) {
 
 export default function StatsSection() {
   return (
-    <section className="bg-ink text-cream py-16">
-      <div className="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+    <section className="bg-ink text-cream py-24 relative overflow-hidden">
+      {/* Background Decorative Element */}
+      <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-[1px] h-full bg-gold" />
+        <div className="absolute top-0 left-2/4 w-[1px] h-full bg-gold" />
+        <div className="absolute top-0 left-3/4 w-[1px] h-full bg-gold" />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-12 text-center relative z-10">
         {stats.map((stat, i) => (
           <StatCard key={stat.label} stat={stat} index={i} />
         ))}

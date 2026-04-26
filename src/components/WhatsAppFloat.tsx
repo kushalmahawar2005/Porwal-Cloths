@@ -4,7 +4,7 @@ export default function WhatsAppFloat() {
       href="https://wa.me/919672299156?text=Hello%20Porwal%20Clothes"
       target="_blank"
       rel="noopener noreferrer"
-      className="whatsapp-float text-sm"
+      className="whatsapp-float text-sm hidden md:inline-flex"
       aria-label="Chat on WhatsApp"
     >
       <svg

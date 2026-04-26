@@ -2,24 +2,24 @@ import Link from "next/link";
 
 const pricingData = [
   {
-    category: "Shirts",
-    slug: "shirts",
+    category: "Shirt",
+    slug: "shirt",
     types: "Formal, Casual, Party",
     priceRange: "₹260 – ₹550",
     moq: "50 pcs",
     highlight: false,
   },
   {
-    category: "T-Shirts",
-    slug: "tshirts",
+    category: "T shirt",
+    slug: "t-shirt",
     types: "Round Neck, Polo, Printed",
     priceRange: "₹120 – ₹300",
     moq: "100 pcs",
     highlight: true,
   },
   {
-    category: "Lowers",
-    slug: "lowers",
+    category: "Lower",
+    slug: "lower",
     types: "Track, Jogger, Pajama",
     priceRange: "₹120 – ₹380",
     moq: "50 pcs",
@@ -34,26 +34,18 @@ const pricingData = [
     highlight: false,
   },
   {
-    category: "Kurta",
-    slug: "kurta",
+    category: "Kurta pajama",
+    slug: "kurta-pajama",
     types: "Cotton, Silk, Festive",
     priceRange: "₹250 – ₹1,100",
     moq: "20 pcs",
     highlight: true,
   },
-  {
-    category: "Combos",
-    slug: "combos",
-    types: "Mixed Bulk Sets",
-    priceRange: "₹2,200 – ₹20,000",
-    moq: "1 set",
-    highlight: false,
-  },
 ];
 
 export default function PricingTable() {
   return (
-    <section className="py-20 md:py-28 bg-white">
+    <section id="pricing" className="py-20 md:py-28 bg-white">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-14">
           <div className="section-label mb-4">Transparent Pricing</div>

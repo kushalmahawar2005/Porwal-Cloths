@@ -55,7 +55,8 @@ export default async function CategoryPage({ params }: PageProps) {
             priority
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/80 to-ink/40" />
+          {/* Reduced overlay for better clarity */}
+          <div className="absolute inset-0 bg-ink/30" />
         </div>
         <div className="relative max-w-7xl mx-auto px-6 py-20 md:py-28">
           <div className="flex items-center gap-2 text-sm text-cream/60 mb-4">

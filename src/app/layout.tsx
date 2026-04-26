@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Inter } from "next/font/google";
+import { Playfair_Display, Archivo } from "next/font/google";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -9,10 +9,10 @@ const playfair = Playfair_Display({
   display: "swap",
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+const archivo = Archivo({
+  variable: "--font-archivo",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700", "800"],
   display: "swap",
 });
 
@@ -45,7 +45,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${inter.variable} antialiased`}
+      className={`${playfair.variable} ${archivo.variable} antialiased`}
     >
       <body className="min-h-screen flex flex-col">{children}</body>
     </html>
